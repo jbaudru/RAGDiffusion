@@ -5,7 +5,7 @@ This project implements a diffusion model for video-to-video generation, specifi
 
 ## Installation
 ```bash
-git clone 
+git clone https://github.com/jbaudru/RAGDiffusion.git 
 cd RAGDiffusion
 pip install -r requirements.txt
 ```
@@ -13,15 +13,20 @@ pip install -r requirements.txt
 
 ## Usage
 ```bash
-python main.py --prompt "A cat playing with a ball" --video_path "test.mov" --output_folder "./output" --fps 10 --num_inference_steps 4 --strength 0.75 --guidance_scale 7.5 --blend 0.3
+python main.py --prompt "A cat playing with a ball" --video_path "test.mov" --output_name "resutl" --fps 10 --num_inference_steps 4 --strength 0.75 --guidance_scale 7.5 --blend 0.3
 ```
 
 ## Parameters
 - `--prompt`: The text prompt to guide the image generation process (default: `"A futuristic cityscape at sunset"`).
 - `--video_path`: Path to the input video file (default: `"input/video.mov"`).
-- `--output_folder`: Folder to save the output video (default: `"output"`).
+- `--output_name`: Name of the output video (default: `"result"`).
 - `--fps`: Frames per second for the output video (default: `10`).
 - `--num_inference_steps`: Number of inference steps for image generation (default: `4`).
 - `--strength`: Strength of the image blending (default: `0.75`).
 - `--guidance_scale`: Guidance scale for image generation (default: `7.5`).
 - `--blend`: Blending factor for mixing the current frame with the previous generated frame (default: `0.3`).
+
+## Example
+
+### Original Video
+![Description](example/original.gif)

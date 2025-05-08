@@ -5,8 +5,9 @@ from util.converter import VideoConverter
 import argparse
 import os
 import shutil
+from tqdm import tqdm
 
-def main(prompt, video_path, output_folder, fps, num_inference_steps, strength, guidance_scale, blend):
+def main(prompt, video_path, output_name, fps, num_inference_steps, strength, guidance_scale, blend):
     video_converter = VideoConverter()
 
     model_id = "stabilityai/sd-turbo"  # Smaller and faster than v1-5
@@ -29,14 +30,14 @@ def main(prompt, video_path, output_folder, fps, num_inference_steps, strength, 
     # Keep track of previous generated frame
     last_generated_image = None
 
-    for i in range(num_frames):
+    for i in tqdm(range(num_frames)):
         # Load the frame image  
         original_image_path = f"frames/frame_{i:05d}.png"
         original_image = Image.open(original_image_path).convert("RGB")
         
         # For frames after the first one, blend with previous generated image
         if last_generated_image is not None:
-            # Blend current frame with previous generated frame (70% original, 30% previous)
+            # Blend current frame with previous generated frame 
             blended_image = Image.blend(original_image, last_generated_image, alpha=blend)
         else:
             blended_image = original_image
@@ -48,7 +49,8 @@ def main(prompt, video_path, output_folder, fps, num_inference_steps, strength, 
             image=blended_image, 
             strength=strength, 
             guidance_scale=guidance_scale,
-            num_inference_steps=num_inference_steps  # Add this parameter
+            num_inference_steps=num_inference_steps,
+            disable_progress_bar=True
         ).images[0]
 
         # Save and display the result
@@ -58,8 +60,8 @@ def main(prompt, video_path, output_folder, fps, num_inference_steps, strength, 
         
         last_generated_image = generated_image
     
-    os.makedirs("output", exist_ok=True)
-    video_path = output_folder + "result.mp4"
+
+    video_path = output_name + ".mp4"
     res_folder = "output_frames"
     video_converter.frames_to_video(res_folder, video_path, fps=fps)
 
@@ -84,13 +86,13 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="RAG Diffusion")
     parser.add_argument("--prompt", type=str, default="Dali painting, surrealism, abstract", help="Text prompt for image generation")
     parser.add_argument("--video_path", type=str, default="input/video.mov", help="Path to the input video file")
-    parser.add_argument("--output_folder", type=str, default="output", help="Folder to save output video")
+    parser.add_argument("--output_name", type=str, default="results_no_rag", help="Folder to save output video")
     
-    parser.add_argument("--fps", type=int, default=10, help="Frames per second for output video")
+    parser.add_argument("--fps", type=int, default=24, help="Frames per second for output video")
     parser.add_argument("--num_inference_steps", type=int, default=2, help="Number of inference steps for frame generation")
-    parser.add_argument("--strength", type=float, default=0.7, help="Strength of the original video")
-    parser.add_argument("--guidance_scale", type=float, default=5.5, help="Guidance scale for video generation")
-    parser.add_argument("--blend", type=float, default=0.2, help="Blending factor for frame blending")
+    parser.add_argument("--strength", type=float, default=0.8, help="Strength of the original video")
+    parser.add_argument("--guidance_scale", type=float, default=4.5, help="Guidance scale for video generation")
+    parser.add_argument("--blend", type=float, default=0.4, help="Blending factor for frame blending (% of previous frame)")
     
     main(
         prompt=parser.parse_args().prompt, 
