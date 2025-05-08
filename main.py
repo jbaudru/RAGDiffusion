@@ -86,18 +86,18 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="RAG Diffusion")
     parser.add_argument("--prompt", type=str, default="Dali painting, surrealism, abstract", help="Text prompt for image generation")
     parser.add_argument("--video_path", type=str, default="input/video.mov", help="Path to the input video file")
-    parser.add_argument("--output_name", type=str, default="results_no_rag", help="Folder to save output video")
+    parser.add_argument("--output_name", type=str, default="results_favorite", help="Folder to save output video")
     
     parser.add_argument("--fps", type=int, default=24, help="Frames per second for output video")
     parser.add_argument("--num_inference_steps", type=int, default=2, help="Number of inference steps for frame generation")
-    parser.add_argument("--strength", type=float, default=0.8, help="Strength of the original video")
-    parser.add_argument("--guidance_scale", type=float, default=4.5, help="Guidance scale for video generation")
-    parser.add_argument("--blend", type=float, default=0.4, help="Blending factor for frame blending (% of previous frame)")
+    parser.add_argument("--strength", type=float, default=0.25, help="Strength of the original video (0= Orginal, 1= Fully generated)")
+    parser.add_argument("--guidance_scale", type=float, default=7.5, help="Guidance scale for video generation (<7.5 = More creative freedom, >7.5 = More adherence to prompt)")
+    parser.add_argument("--blend", type=float, default=0.45, help="Blending factor for frame blending (% of previous frame)")
     
     main(
         prompt=parser.parse_args().prompt, 
         video_path=parser.parse_args().video_path, 
-        output_folder=parser.parse_args().output_folder, 
+        output_name=parser.parse_args().output_name, 
         fps=parser.parse_args().fps, 
         num_inference_steps=parser.parse_args().num_inference_steps, 
         strength=parser.parse_args().strength, 
