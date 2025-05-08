@@ -41,10 +41,12 @@ python main.py --prompt "A cat playing with a ball" --video_path "test.mov" --ou
 ### 0% Blend (No RAG)
 ![Description](example/rag0.gif)
 
-
 ### 40% Blend
 ![Description](example/rag40.gif)
 
+### Favorite Settings
+![Description](example/fav.gif)
+<sub>**FPS**: 24, **Num Inference Steps**: 10, **Strength**: 0.25, **Guidance Scale**: 7.5, **Blend**: 0.15</sub>
 
 ## TODO
 - Allow to use multiple prompts for the output video.
