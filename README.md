@@ -6,7 +6,7 @@
 
 # RAGDiffusion
 
-This project implements a diffusion model for video-to-video generation, specifically for the task of generating videos from text prompts. The model is based on the diffusion model "SD Turbo", **the principal idea is to use a previous generated frame of the video blended with the current frame to generate the next frame**. This method allows for a more coherent and consistent video generation process, as the model can leverage the information from the previous frame to generate the next one.
+This project implements a diffusion model for **video-to-video** generation, specifically for the task of generating videos from text prompts. The model is based on the diffusion model "SD Turbo", **the principal idea is to use a previous generated frame of the video blended with the current frame to generate the next frame**. This method allows for a more coherent and consistent video generation process, as the model can leverage the information from the previous frame to generate the next one.
 
 
 ## Installation

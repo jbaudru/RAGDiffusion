@@ -6,9 +6,20 @@ import argparse
 import os
 import shutil
 from tqdm import tqdm
+import random
+import numpy as np
 
-def main(prompt, video_path, output_name, fps, num_inference_steps, strength, guidance_scale, blend):
+def main(prompt, video_path, output_name, fps, num_inference_steps, strength, guidance_scale, blend, seed=66):
     video_converter = VideoConverter()
+    
+    if seed is not None:
+        torch.manual_seed(seed)
+        random.seed(seed)
+        np.random.seed(seed)
+        torch.cuda.manual_seed_all(seed)
+        torch.backends.cudnn.deterministic = True
+        torch.backends.cudnn.benchmark = False
+        print(f"Using seed: {seed}")
 
     model_id = "stabilityai/sd-turbo"  # Smaller and faster than v1-5
     # Alternative options:
@@ -86,13 +97,13 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="RAG Diffusion")
     parser.add_argument("--prompt", type=str, default="Dali painting, surrealism, abstract", help="Text prompt for image generation")
     parser.add_argument("--video_path", type=str, default="input/video.mov", help="Path to the input video file")
-    parser.add_argument("--output_name", type=str, default="results_favorite", help="Folder to save output video")
+    parser.add_argument("--output_name", type=str, default="output/results_test", help="Folder to save output video")
     
     parser.add_argument("--fps", type=int, default=24, help="Frames per second for output video")
-    parser.add_argument("--num_inference_steps", type=int, default=2, help="Number of inference steps for frame generation")
+    parser.add_argument("--num_inference_steps", type=int, default=10, help="Number of inference steps for frame generation")
     parser.add_argument("--strength", type=float, default=0.25, help="Strength of the original video (0= Orginal, 1= Fully generated)")
     parser.add_argument("--guidance_scale", type=float, default=7.5, help="Guidance scale for video generation (<7.5 = More creative freedom, >7.5 = More adherence to prompt)")
-    parser.add_argument("--blend", type=float, default=0.45, help="Blending factor for frame blending (% of previous frame)")
+    parser.add_argument("--blend", type=float, default=0.15, help="Blending factor for frame blending (% of previous frame)")
     
     main(
         prompt=parser.parse_args().prompt, 
