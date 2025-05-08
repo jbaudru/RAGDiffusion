@@ -40,16 +40,17 @@ python main.py --prompt "A cat playing with a ball" --video_path "test.mov" --ou
 
 ### 0% Blend (No RAG)
 ![Description](example/rag0.gif)
+<sub>fps:24, num_inference_steps:10, strength:0.35, guidance_scale:7.5, blend:0</sub>
 
-### 40% Blend
-![Description](example/rag40.gif)
-
-### Favorite Settings
-![Description](example/fav.gif)
-<sub>**FPS**: 24, **Num Inference Steps**: 10, **Strength**: 0.25, **Guidance Scale**: 7.5, **Blend**: 0.15</sub>
+### 35% Blend (RAG)
+![Description](example/rag35.gif)
+<sub>fps:24, num_inference_steps:10, strength:0.35, guidance_scale:7.5, blend:0.35</sub>
 
 ## TODO
+- Keep sound of original video and add it to the generated video.
+- Keep orientation of the original video in the generated video.
 - Allow to use multiple prompts for the output video.
+  - Read the prompt from a file with time stamps.
 - Allow to use mutiple previous frames to generate the next frame.
 - Fix progress bar bug.
 - Speed up the generation process.

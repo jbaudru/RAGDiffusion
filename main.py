@@ -96,14 +96,14 @@ def clean_temp_folders():
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="RAG Diffusion")
     parser.add_argument("--prompt", type=str, default="Dali painting, surrealism, abstract", help="Text prompt for image generation")
-    parser.add_argument("--video_path", type=str, default="input/chat.mov", help="Path to the input video file")
-    parser.add_argument("--output_name", type=str, default="output/chat_test", help="Folder to save output video")
+    parser.add_argument("--video_path", type=str, default="input/dance.mp4", help="Path to the input video file")
+    parser.add_argument("--output_name", type=str, default="output/dance", help="Folder to save output video")
     
-    parser.add_argument("--fps", type=int, default=24, help="Frames per second for output video")
-    parser.add_argument("--num_inference_steps", type=int, default=4, help="Number of inference steps for frame generation")
+    parser.add_argument("--fps", type=int, default=24, help="Robotic, dangerous, and scary")
+    parser.add_argument("--num_inference_steps", type=int, default=10, help="Number of inference steps for frame generation")
     parser.add_argument("--strength", type=float, default=0.35, help="Strength of the original video (0= Orginal, 1= Fully generated)")
     parser.add_argument("--guidance_scale", type=float, default=7.5, help="Guidance scale for video generation (<7.5 = More creative freedom, >7.5 = More adherence to prompt)")
-    parser.add_argument("--blend", type=float, default=0.15, help="Blending factor for frame blending (% of previous frame)")
+    parser.add_argument("--blend", type=float, default=0.35, help="Blending factor for frame blending (% of previous frame)")
     
     main(
         prompt=parser.parse_args().prompt, 
