@@ -40,11 +40,15 @@ python main.py --prompt "A cat playing with a ball" --video_path "test.mov" --ou
 
 ### 0% Blend (No RAG)
 ![Description](example/rag0.gif)
-<sub>fps:24, num_inference_steps:10, strength:0.35, guidance_scale:7.5, blend:0</sub>
+<sub>**Parameters**: fps:24, num_inference_steps:10, strength:0.35, guidance_scale:7.5, blend:0</sub>
+
+### 15% Blend (RAG)
+![Description](example/rag15.gif)
+<sub>**Parameters**: fps:24, num_inference_steps:10, strength:0.35, guidance_scale:7.5, blend:0.15</sub>
 
 ### 35% Blend (RAG)
 ![Description](example/rag35.gif)
-<sub>fps:24, num_inference_steps:10, strength:0.35, guidance_scale:7.5, blend:0.35</sub>
+<sub>**Parameters**: fps:24, num_inference_steps:10, strength:0.35, guidance_scale:7.5, blend:0.35</sub>
 
 ## TODO
 - Keep sound of original video and add it to the generated video.
