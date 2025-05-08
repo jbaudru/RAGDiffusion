@@ -30,3 +30,6 @@ python main.py --prompt "A cat playing with a ball" --video_path "test.mov" --ou
 
 ### Original Video
 ![Description](example/original.gif)
+
+### RAG 40% Blend
+![Description](example/rag40.gif)
