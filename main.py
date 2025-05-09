@@ -8,8 +8,9 @@ import shutil
 from tqdm import tqdm
 import random
 import numpy as np
+import logging
 
-def main(prompt, video_path, output_name, fps, num_inference_steps, strength, guidance_scale, blend, seed=66):
+def main(prompt, negative_prompt, video_path, output_name, fps, num_inference_steps, strength, guidance_scale, blend, seed=66):
     video_converter = VideoConverter()
     
     if seed is not None:
@@ -17,8 +18,8 @@ def main(prompt, video_path, output_name, fps, num_inference_steps, strength, gu
         random.seed(seed)
         np.random.seed(seed)
         torch.cuda.manual_seed_all(seed)
-        torch.backends.cudnn.deterministic = True
-        torch.backends.cudnn.benchmark = False
+        #torch.backends.cudnn.deterministic = True
+        torch.backends.cudnn.benchmark = True
         print(f"Using seed: {seed}")
 
     model_id = "stabilityai/sd-turbo"  # Smaller and faster than v1-5
@@ -30,8 +31,7 @@ def main(prompt, video_path, output_name, fps, num_inference_steps, strength, gu
 
     pipe = StableDiffusionImg2ImgPipeline.from_pretrained(model_id, torch_dtype=torch.float16)
     pipe = pipe.to("cuda")  # Use GPU for faster inference
-    #pipe.enable_xformers_memory_efficient_attention()
-    pipe.enable_model_cpu_offload()
+    #pipe.enable_model_cpu_offload()
 
     temp_folder = "frames"
     # Create output folder if it doesn't exist
@@ -57,6 +57,7 @@ def main(prompt, video_path, output_name, fps, num_inference_steps, strength, gu
         
         generated_image = pipe(
             prompt=prompt, 
+            negative_prompt=negative_prompt,
             image=blended_image, 
             strength=strength, 
             guidance_scale=guidance_scale,
@@ -95,24 +96,33 @@ def clean_temp_folders():
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="RAG Diffusion")
-    parser.add_argument("--prompt", type=str, default="Dali painting, surrealism, abstract", help="Text prompt for image generation")
-    parser.add_argument("--video_path", type=str, default="input/dance.mp4", help="Path to the input video file")
-    parser.add_argument("--output_name", type=str, default="output/dance15", help="Folder to save output video")
+    parser.add_argument("--prompt", type=str, default="psychadelic space travel, galaxy, cloud, 4k ", help="Text prompt for image generation")
+    parser.add_argument("--negative_prompt", type=str, default="ugly, bad anatomy, blurry, pixelated, watermark, text, low quality, distorted", help="Negative prompt to specify what to avoid in generation")
+    parser.add_argument("--video_path", type=str, default="input/fisheye_appart.mp4", help="Path to the input video file")
+    parser.add_argument("--output_name", type=str, default="output/test", help="Folder to save output video")
     
-    parser.add_argument("--fps", type=int, default=24, help="Robotic, dangerous, and scary")
+    parser.add_argument("--fps", type=int, default=30, help="Number of frames per second for the output video")
     parser.add_argument("--num_inference_steps", type=int, default=10, help="Number of inference steps for frame generation")
-    parser.add_argument("--strength", type=float, default=0.35, help="Strength of the original video (0= Orginal, 1= Fully generated)")
+    parser.add_argument("--strength", type=float, default=0.3, help="Strength of the original video (0= Orginal, 1= Fully generated)")
     parser.add_argument("--guidance_scale", type=float, default=7.5, help="Guidance scale for video generation (<7.5 = More creative freedom, >7.5 = More adherence to prompt)")
-    parser.add_argument("--blend", type=float, default=0.15, help="Blending factor for frame blending (% of previous frame)")
+    parser.add_argument("--blend", type=float, default=0.3, help="Blending factor for frame blending (% of previous frame)")
+    parser.add_argument("--seed", type=int, default=66, help="Random seed for reproducibility")
     
     main(
         prompt=parser.parse_args().prompt, 
+        negative_prompt=parser.parse_args().negative_prompt,
         video_path=parser.parse_args().video_path, 
         output_name=parser.parse_args().output_name, 
         fps=parser.parse_args().fps, 
         num_inference_steps=parser.parse_args().num_inference_steps, 
         strength=parser.parse_args().strength, 
         guidance_scale=parser.parse_args().guidance_scale,
-        blend=parser.parse_args().blend
+        blend=parser.parse_args().blend,
+        seed=parser.parse_args().seed
     )
     
+    
+# Prompt test:
+# A surreal alien landscape with giant, otherworldly plants and creatures in the foreground, two astronauts exploring amidst the colorful flora. The sky is a clear blue, creating an ethereal atmosphere
+# Beautiful anime painting of solarpunk summer chill day, by victor nizovtsev, Grzegorz Rosiński, noah bradley. trending on artstation, 8k, masterpiece, graffiti paint, fine detail, full of color, intricate detail, golden ratio illustration
+# football stadium, Lionel Messi, golden goal, cartoonish, colorfull, fans cheer wildly, scoreboard, soccer jersey

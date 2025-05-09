@@ -33,6 +33,9 @@ class VideoConverter:
         total_frames = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
         original_fps = video.get(cv2.CAP_PROP_FPS)
         
+        # Check for rotation metadata
+        rotation = int(video.get(cv2.CAP_PROP_ORIENTATION_META))
+        
         # Determine frame extraction rate
         if fps is None:
             frame_interval = 1
@@ -43,7 +46,7 @@ class VideoConverter:
         count = 0
         frame_number = 0
         
-        print(f"Extracting frames from {video_path} (total: {total_frames}, FPS: {original_fps})")
+        print(f"Extracting frames from {video_path} (total: {total_frames}, FPS: {original_fps}, rotation: {rotation}°)")
         
         with tqdm(total=total_frames) as pbar:
             while True:
@@ -52,6 +55,14 @@ class VideoConverter:
                     break
                     
                 if frame_number % frame_interval == 0:
+                    # Apply rotation if needed
+                    if rotation == 90:
+                        frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
+                    elif rotation == 180:
+                        frame = cv2.rotate(frame, cv2.ROTATE_180)
+                    elif rotation == 270:
+                        frame = cv2.rotate(frame, cv2.ROTATE_90_COUNTERCLOCKWISE)
+                    
                     # Resize if needed
                     if resize:
                         frame = cv2.resize(frame, resize)

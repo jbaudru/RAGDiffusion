@@ -42,6 +42,10 @@ python main.py --prompt "A cat playing with a ball" --video_path "test.mov" --ou
 ![Description](example/rag0.gif)
 <sub>**Parameters**: fps:24, num_inference_steps:10, strength:0.35, guidance_scale:7.5, blend:0</sub>
 
+### 5% Blend (RAG)
+![Description](example/rag05.gif)
+<sub>**Parameters**: fps:24, num_inference_steps:10, strength:0.35, guidance_scale:7.5, blend:0.5</sub>
+
 ### 15% Blend (RAG)
 ![Description](example/rag15.gif)
 <sub>**Parameters**: fps:24, num_inference_steps:10, strength:0.35, guidance_scale:7.5, blend:0.15</sub>
@@ -52,7 +56,6 @@ python main.py --prompt "A cat playing with a ball" --video_path "test.mov" --ou
 
 ## TODO
 - Keep sound of original video and add it to the generated video.
-- Keep orientation of the original video in the generated video.
 - Allow to use multiple prompts for the output video.
   - Read the prompt from a file with time stamps.
 - Allow to use mutiple previous frames to generate the next frame.
