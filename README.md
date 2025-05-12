@@ -77,6 +77,4 @@ For **stabilityai/sd-turbo** model:
 
 ## TODO
 - Keep sound of original video and add it to the generated video.
-- Allow to use multiple prompts for the output video.
-  - Read the prompt from a file with time stamps.
 - Speed up the generation process.
