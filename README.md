@@ -19,7 +19,7 @@ pip install -r requirements.txt
 
 ## Usage
 ```bash
-python video_gen.py --prompt "A cat playing with a ball" --video_path "test.mov" --output_name "resutl" --fps 10 --num_inference_steps 4 --strength 0.75 --guidance_scale 7.5 --blend 0.3
+python genVideo.py --prompt "A cat playing with a ball" --video_path "test.mov" --output_name "resutl" --fps 10 --num_inference_steps 4 --strength 0.75 --guidance_scale 7.5 --blend 0.3
 ```
 
 ## Parameters
