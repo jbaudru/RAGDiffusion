@@ -3,3 +3,4 @@ torchvision==0.21.0+cu124
 diffusers==0.33.1
 transformers==4.51.3
 tqdm=4.67.1
+pysrt

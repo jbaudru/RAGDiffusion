@@ -1,12 +1,24 @@
 import cv2
 import os
-import numpy as np
 from PIL import Image
 from tqdm import tqdm
+import shutil
 
 class VideoConverter:
     def __init__(self):
         pass
+    
+    def clean_temp_folders(self):
+        """Remove temporary frame folders after processing"""
+        folders_to_clean = ["frames", "temp_frames"]
+        
+        for folder in folders_to_clean:
+            if os.path.exists(folder):
+                try:
+                    shutil.rmtree(folder)
+                    print(f"Successfully deleted {folder} folder")
+                except Exception as e:
+                    print(f"Error deleting {folder}: {e}")
     
     def extract_frames(self, video_path, output_folder="frames", fps=None, resize=None):
         """

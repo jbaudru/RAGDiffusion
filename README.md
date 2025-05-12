@@ -19,18 +19,25 @@ pip install -r requirements.txt
 
 ## Usage
 ```bash
-python main.py --prompt "A cat playing with a ball" --video_path "test.mov" --output_name "resutl" --fps 10 --num_inference_steps 4 --strength 0.75 --guidance_scale 7.5 --blend 0.3
+python video_gen.py --prompt "A cat playing with a ball" --video_path "test.mov" --output_name "resutl" --fps 10 --num_inference_steps 4 --strength 0.75 --guidance_scale 7.5 --blend 0.3
 ```
 
 ## Parameters
-- `--prompt`: The text prompt to guide the image generation process (default: `"Dali painting, surrealism, abstract"`).
-- `--video_path`: Path to the input video file (default: `"input/video.mov"`).
-- `--output_name`: Name of the output video without extension (default: `"results_strong_original"`).
-- `--fps`: Frames per second for the output video (default: `24`).
-- `--num_inference_steps`: Number of inference steps for frame generation (default: `2`).
-- `--strength`: Strength of the diffusion effect (0 = Original video, 1 = Fully generated) (default: `0.25`).
+- `--prompt`: The text prompt to guide the image generation process (default: `"painting, trippy, psychadelic, sky, cloud, rainbow, 60's, 4k"`).
+- `--negative_prompt`: Negative prompt to specify what to avoid in generation (default: `"ugly, bad anatomy, blurry, pixelated, watermark, text, low quality, distorted"`).
+- `--video_path`: Path to the input video file (default: `"input/dance.mp4"`).
+- `--output_name`: Name of the output video without extension (default: `"output_video/test_srtfile"`).
+- `--fps`: Frames per second for the output video (default: `5`).
+- `--num_inference_steps`: Number of inference steps for frame generation (default: `5`).
+- `--strength`: Strength of the diffusion effect (0 = Original video, 1 = Fully generated) (default: `0.4`).
 - `--guidance_scale`: Guidance scale for video generation - lower values (<7.5) provide more creative freedom, higher values (>7.5) enforce stricter adherence to the prompt (default: `7.5`).
-- `--blend`: Blending factor for mixing the current frame with the previous generated frame (default: `0.45`).
+- `--blend`: Blending factor for mixing the current frame with the previous generated frame (default: `0.4`).
+- `--num_previous_frames`: Number of previous frames to blend (default: `2`).
+- `--seed`: Random seed for reproducibility (default: `66`).
+- `--prompt_file`: Path to a `.txt` or `.srt` file containing prompts. 
+
+You can easily generate an `.srt` file for a video using this tool: [Clideo SRT File Generator](https://clideo.com/create-srt-file).
+
 
 ## Runtime
 For **stabilityai/sd-turbo** model:
@@ -41,6 +48,7 @@ For **stabilityai/sd-turbo** model:
 | RTX 3090 | 15 | 0.35 | 7.5 | 0.15 | 3.53s |
 | RTX 3090 | 25 | 0.25 | 7.5 | 0.15 | 3.88s |
 
+*Todo: Test runtime when using .srt file, using multiple prompts, and using a different model.*
 
 
 ## Example
@@ -64,10 +72,11 @@ For **stabilityai/sd-turbo** model:
 ![Description](example/rag35.gif)
 <sub>**Parameters**: fps:24, num_inference_steps:10, strength:0.35, guidance_scale:7.5, blend:0.35</sub>
 
+
+*Todo: Show difference with 1 or multiple previous frames*
+
 ## TODO
 - Keep sound of original video and add it to the generated video.
 - Allow to use multiple prompts for the output video.
   - Read the prompt from a file with time stamps.
-- Allow to use mutiple previous frames to generate the next frame.
-- Fix progress bar bug.
 - Speed up the generation process.
