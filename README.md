@@ -32,6 +32,16 @@ python main.py --prompt "A cat playing with a ball" --video_path "test.mov" --ou
 - `--guidance_scale`: Guidance scale for video generation - lower values (<7.5) provide more creative freedom, higher values (>7.5) enforce stricter adherence to the prompt (default: `7.5`).
 - `--blend`: Blending factor for mixing the current frame with the previous generated frame (default: `0.45`).
 
+## Runtime
+For **stabilityai/sd-turbo** model:
+| GPU |  num_inference_steps | strength | guidance_scale | blend | runtime(s)/frame |
+|-----|----------------------|----------|----------------|-------|-------------|
+| RTX 3090 | 10 | 0.25 | 7.5 | 0.15 | 2.16s |
+| RTX 3090 | 15 | 0.25 | 7.5 | 0.15 | 2.57s |
+| RTX 3090 | 15 | 0.35 | 7.5 | 0.15 | 3.53s |
+| RTX 3090 | 25 | 0.25 | 7.5 | 0.15 | 3.88s |
+
+
 
 ## Example
 

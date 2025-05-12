@@ -96,16 +96,16 @@ def clean_temp_folders():
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="RAG Diffusion")
-    parser.add_argument("--prompt", type=str, default="psychadelic space travel, galaxy, cloud, 4k ", help="Text prompt for image generation")
+    parser.add_argument("--prompt", type=str, default="painting, trippy, psychadelic, sky, cloud, rainbow, 60's, 4k", help="Text prompt for image generation")
     parser.add_argument("--negative_prompt", type=str, default="ugly, bad anatomy, blurry, pixelated, watermark, text, low quality, distorted", help="Negative prompt to specify what to avoid in generation")
-    parser.add_argument("--video_path", type=str, default="input/fisheye_appart.mp4", help="Path to the input video file")
-    parser.add_argument("--output_name", type=str, default="output/test", help="Folder to save output video")
+    parser.add_argument("--video_path", type=str, default="input/sample.mp4", help="Path to the input video file")
+    parser.add_argument("--output_name", type=str, default="output/sample_out", help="Folder to save output video")
     
-    parser.add_argument("--fps", type=int, default=30, help="Number of frames per second for the output video")
-    parser.add_argument("--num_inference_steps", type=int, default=10, help="Number of inference steps for frame generation")
-    parser.add_argument("--strength", type=float, default=0.3, help="Strength of the original video (0= Orginal, 1= Fully generated)")
+    parser.add_argument("--fps", type=int, default=24, help="Number of frames per second for the output video")
+    parser.add_argument("--num_inference_steps", type=int, default=15, help="Number of inference steps for frame generation")
+    parser.add_argument("--strength", type=float, default=0.4, help="Strength of the original video (0= Orginal, 1= Fully generated)")
     parser.add_argument("--guidance_scale", type=float, default=7.5, help="Guidance scale for video generation (<7.5 = More creative freedom, >7.5 = More adherence to prompt)")
-    parser.add_argument("--blend", type=float, default=0.3, help="Blending factor for frame blending (% of previous frame)")
+    parser.add_argument("--blend", type=float, default=0.5, help="Blending factor for frame blending (% of previous frame)")
     parser.add_argument("--seed", type=int, default=66, help="Random seed for reproducibility")
     
     main(
